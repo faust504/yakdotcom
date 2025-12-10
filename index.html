@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG_ARYA // UNIT 9A</title>
+
+    <link rel="icon" type="image/png" href="image2.jpeg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'header': ['"Share Tech Mono"', 'monospace'],
+                        'body': ['"Courier Prime"', 'monospace'],
+                    },
+                    colors: {
+                        'soviet-bg': '#e5e5e5',       // Concrete Grey
+                        'soviet-panel': '#f5f5f5',    // Lighter Paper/Panel
+                        'soviet-ink': '#171717',      // Deep Black
+                        'soviet-red': '#b91c1c',      // Agitprop/Safety Red
+                        'soviet-line': '#a3a3a3',     // Structural Line Grey
+                    },
+                    backgroundImage: {
+                        'warning-stripes': 'repeating-linear-gradient(45deg, transparent, transparent 10px, #e5e5e5 10px, #e5e5e5 20px)',
+                    },
+                    boxShadow: {
+                        'flat': '4px 4px 0px 0px #171717', // Hard black shadow
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #e5e5e5;
+            color: #171717;
+            /* Technical Grid Background */
+            background-image: 
+                linear-gradient(#a3a3a3 1px, transparent 1px),
+                linear-gradient(90deg, #a3a3a3 1px, transparent 1px);
+            background-size: 40px 40px;
+            /* Make grid lines very subtle */
+            background-blend-mode: multiply;
+        }
+
+        /* Brutalist Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            border-left: 1px solid #171717;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e5e5e5; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b91c1c; 
+            border: 1px solid #171717;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #171717; 
+        }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            border-bottom: 0px solid #171717;
+        }
+        
+        #mobile-menu.open {
+            max-height: 300px;
+            opacity: 1;
+            border-bottom: 1px solid #171717;
+        }
+
+        /* Scanline effect overlay (optional, subtle) */
+        .scanlines {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 50;
+        }
+    </style>
+
+    <meta property="og:title" content="Radhin Arya Rabbanie">
+    <meta property="og:description" content="UNIT 9A STATUS REPORT">
+</head>
+<body class="font-body text-soviet-ink p-4 md:p-12 min-h-screen flex flex-col items-center">
+
+    <div class="scanlines"></div>
+
+    <div class="w-full max-w-5xl flex justify-between items-stretch mb-4 md:hidden relative z-10">
+        
+        <div id="mobile-clock" class="flex-grow flex items-center justify-start border border-soviet-ink bg-soviet-panel px-4 text-xs font-header font-bold tracking-widest text-soviet-red uppercase">
+            </div>
+
+        <button onclick="toggleMenu()" class="ml-[-1px] border border-soviet-ink bg-soviet-red text-white p-3 hover:bg-soviet-ink transition-colors shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+
+    <div id="mobile-menu" class="w-full max-w-5xl md:hidden bg-soviet-panel border-x border-t border-soviet-ink relative z-10 mb-4">
+        <ul class="flex flex-col text-left font-header text-sm tracking-widest uppercase">
+            <li><a href="#home" onclick="toggleMenu()" class="block py-4 px-6 hover:bg-soviet-ink hover:text-white transition-colors border-b border-soviet-ink">01 // Home</a></li>
+            <li><a href="#about" onclick="toggleMenu()" class="block py-4 px-6 hover:bg-soviet-ink hover:text-white transition-colors border-b border-soviet-ink">02 // Personnel_File</a></li>
+            <li><a href="#blog" onclick="toggleMenu()" class="block py-4 px-6 hover:bg-soviet-ink hover:text-white transition-colors">03 // Transmissions</a></li>
+        </ul>
+    </div>
+
+    <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 border border-soviet-ink bg-soviet-panel relative z-10 shadow-flat">
+
+        <header id="home" class="col-span-1 md:col-span-12 border-b border-soviet-ink p-8 md:p-12 relative overflow-hidden group bg-soviet-panel">
+            <div class="absolute top-4 right-4 border border-soviet-red text-soviet-red px-2 py-1 text-[10px] font-header tracking-widest rotate-[-12deg] opacity-70">
+                APPROVED
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                <div>
+                    <h1 class="text-4xl md:text-6xl font-header font-bold uppercase tracking-tighter leading-none">
+                        Radhin<br><span class="text-soviet-red">Arya Rabbanie</span>
+                    </h1>
+                    <p class="mt-2 text-sm font-header tracking-widest text-gray-500">
+                        UNIT 9A // ID: 25 // SURABAYA SECTOR
+                    </p>
+                </div>
+                <div class="text-xs font-mono border-l-2 border-soviet-red pl-3 text-gray-600 max-w-xs">
+                    ASSALAMUALAIKUM WR. WB.<br>
+                    STATUS: OPERATIONAL
+                </div>
+            </div>
+        </header>
+
+        <aside class="hidden md:flex flex-col col-span-3 border-r border-soviet-ink bg-soviet-panel h-full">
+            <div class="p-4 border-b border-soviet-ink bg-soviet-bg">
+                <div class="w-full h-full border border-soviet-ink bg-gray-300 relative grayscale hover:grayscale-0 transition-all duration-700">
+                    <img src="image.jpeg" alt="ID PHOTO" class="w-full h-full object-cover mix-blend-multiply">
+                    <div class="absolute bottom-0 right-0 bg-soviet-red text-white text-[10px] px-1 font-header">IMG_REF_01</div>
+                </div>
+            </div>
+
+            <nav class="p-0">
+                <ul class="font-header text-sm tracking-widest">
+                    <li><a href="#home" class="block py-4 px-4 border-b border-soviet-ink hover:bg-soviet-red hover:text-white transition-colors flex justify-between">
+                        <span>HOME</span> <span>[01]</span>
+                    </a></li>
+                    <li><a href="#about" class="block py-4 px-4 border-b border-soviet-ink hover:bg-soviet-red hover:text-white transition-colors flex justify-between">
+                        <span>PERSONNEL</span> <span>[02]</span>
+                    </a></li>
+                    <li><a href="#blog" class="block py-4 px-4 border-b border-soviet-ink hover:bg-soviet-red hover:text-white transition-colors flex justify-between">
+                        <span>POSTS</span> <span>[03]</span>
+                    </a></li>
+                </ul>
+            </nav>
+            
+            <div class="flex-grow bg-warning-stripes opacity-20 min-h-[100px] border-b border-soviet-ink"></div>
+            
+            <div class="p-4 text-[10px] font-header text-center">
+                SYS_VER 2025.12<br>
+                NO UNAUTHORIZED ACCESS
+            </div>
+        </aside>
+
+        <main class="col-span-1 md:col-span-9 bg-soviet-panel">
+            
+            <article id="blog" class="border-b border-soviet-ink scroll-mt-4">
+                <div class="bg-soviet-ink text-white p-2 text-xs font-header flex justify-between items-center">
+                    <span>TRANSMISSION #00001</span>
+                    <span class="text-soviet-red">● REC</span>
+                </div>
+
+                <div class="p-8">
+                    <h2 class="text-2xl font-header font-bold uppercase mb-2">Laporan: Pengalamanku di SPEGA</h2>
+                    <div class="text-xs font-mono text-gray-500 mb-6 border-b border-gray-300 pb-2">
+                        DATE: 11 DEC 2025 | CLASS: TIK
+                    </div>
+
+                    <div class="w-full aspect-video border border-soviet-ink bg-black mb-6 relative">
+                        <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+                            <div class="w-full h-[1px] bg-white"></div>
+                            <div class="h-full w-[1px] bg-white absolute"></div>
+                        </div>
+                        <iframe class="w-full h-full grayscale hover:grayscale-0 transition-all duration-300" src="https://www.youtube.com/embed/qnbwUiSudIk?si=_bJiTL4Wm8WYW5G3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+
+                    <div id="blog-content" class="prose prose-stone prose-p:font-body prose-headings:font-header prose-headings:uppercase max-w-none text-sm leading-relaxed">
+                    </div>
+                </div>
+            </article>
+
+            <section id="about" class="p-8 scroll-mt-4">
+                <div class="border border-soviet-ink p-1 mb-6 inline-block">
+                    <h2 class="text-xl font-header font-bold uppercase bg-soviet-red text-white px-4 py-1">
+                        Personnel File
+                    </h2>
+                </div>
+                
+                <div id="about-content" class="prose prose-stone prose-p:font-body prose-headings:font-header prose-li:marker:text-soviet-red max-w-none text-sm">
+                </div>
+
+                <div class="md:hidden w-full mt-8 border border-soviet-ink p-1">
+                    <img src="image.jpeg" alt="Fotoku" class="w-full h-full object-cover grayscale block">
+                </div>
+
+                <div class="mt-8 border-t border-dotted border-soviet-ink pt-4 font-header text-xs">
+                    <p class="uppercase">End of File // Terima Kasih Itu Aja</p>
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer class="col-span-1 md:col-span-12 border-t border-soviet-ink bg-soviet-ink text-soviet-bg p-6 text-center">
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs font-header tracking-widest">
+                <div class="mb-2 md:mb-0">
+                    SEKIAN WASSALAMUALAIKUM WR. WB.
+                </div>
+                <div class="border border-soviet-bg px-2 py-1 uppercase">
+                    Project TIK 2025
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- 1. MENU FUNCTION ---
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        }
+
+        // --- 2. MARKDOWN CONTENT ---
+        // Styled to look like a report
+        const blogMarkdown = `
+SUBJECT: **SPEGA EXPERIENCE**
+
+
+SPEGA itu seru parah jir aku suka banget sekolah di **SPEGA** soalnya banyak banget hal seru yang aku lakuin di sekolah ini contohnya mabar pas jamkos.
+
+## FORECAST (2027)
+Next year dan tahun depannya hopefully semoga aku tetep di **SPEGA** soalnya emang segitu serunya jir.
+
+## ASSETS
+* [OK] Jadwal aseks
+* [OK] Temen aseks
+* [OK] Guru aseks
+`;
+
+        const aboutMarkdown = `
+***IDENTITY CONFIRMED:***
+
+NAME: **Radhin Arya Rabbanie**
+
+ALIAS: **Aryak**
+
+UNIT: **9A** ID: **25**
+
+LOCATION: **SMP NEGERI 3 SURABAYA**
+
+## CIRI KHAS
+1. Hitam
+2. Pemancal
+3. Driver rally
+4. Hitam
+`;
+
+        document.getElementById('blog-content').innerHTML = marked.parse(blogMarkdown);
+        document.getElementById('about-content').innerHTML = marked.parse(aboutMarkdown);
+
+        // --- 3. CLOCK FUNCTION ---
+        function updateClock() {
+            const now = new Date();
+            // Format: 11-DEC-2025 T 14:30:05
+            const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase().replace(/ /g, '-');
+            const timeStr = now.toLocaleTimeString('en-GB', { hour12: false });
+            
+            const clockEl = document.getElementById('mobile-clock');
+            if(clockEl) {
+                clockEl.innerText = `SYS_TIME: ${dateStr} T ${timeStr}`;
+            }
+        }
+
+        updateClock(); 
+        setInterval(updateClock, 1000);
+
+    </script>
+</body>
+</html>
